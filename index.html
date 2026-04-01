@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Meta Ads — Surcando Viajes · Marzo 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #f5efe6;
+    --sand-dark: #e8ddd0;
+    --terra: #c4622d;
+    --terra-light: #d97f50;
+    --terra-dark: #8b3d18;
+    --night: #1a1410;
+    --night-mid: #2e2318;
+    --bark: #5c3d2e;
+    --leaf: #3d6b4f;
+    --leaf-light: #5a9470;
+    --sky: #4a7fa5;
+    --gold: #c8922a;
+    --gold-light: #e8b94a;
+    --text: #2e2318;
+    --text-muted: #7a6555;
+    --border: rgba(92,61,46,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--night);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(196,98,45,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(74,127,165,0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #1a1410 0%, #2e2318 50%, #1a1410 100%);
+  }
+
+  .header-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 48px 56px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: var(--terra-light);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 300;
+    color: var(--sand);
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+  }
+
+  .header-title em {
+    font-style: italic;
+    color: var(--terra-light);
+  }
+
+  .header-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(245,239,230,0.55);
+    margin-top: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .header-meta {
+    text-align: right;
+  }
+
+  .header-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--terra-light);
+    letter-spacing: 1px;
+    line-height: 1.8;
+    opacity: 0.8;
+  }
+
+  .header-platform {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(196,98,45,0.2);
+    border: 1px solid rgba(196,98,45,0.3);
+    border-radius: 4px;
+    padding: 8px 14px;
+    margin-top: 12px;
+  }
+
+  .header-platform span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--terra-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .meta-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--terra-light);
+    box-shadow: 0 0 8px rgba(196,98,45,0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── DIVIDER ── */
+  .header-divider {
+    height: 4px;
+    background: linear-gradient(90deg, var(--terra-dark), var(--terra), var(--gold), var(--terra-light), transparent);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 48px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .kpi-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(92,61,46,0.1);
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+
+  .kpi-card.terra::before { background: var(--terra); }
+  .kpi-card.leaf::before { background: var(--leaf); }
+  .kpi-card.sky::before { background: var(--sky); }
+  .kpi-card.gold::before { background: var(--gold); }
+
+  .kpi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .kpi-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--night);
+    margin-bottom: 8px;
+  }
+
+  .kpi-value sup {
+    font-size: 20px;
+    vertical-align: super;
+    font-weight: 400;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .kpi-badge {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  .badge-good { background: rgba(61,107,79,0.1); color: var(--leaf); }
+  .badge-neutral { background: rgba(74,127,165,0.1); color: var(--sky); }
+
+  /* ── TWO COLUMN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  /* ── AD SET TABLE ── */
+  .adset-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .adset-block {
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+
+  .adset-block.winner {
+    background: linear-gradient(135deg, rgba(61,107,79,0.08), rgba(61,107,79,0.04));
+    border: 1px solid rgba(61,107,79,0.2);
+  }
+
+  .adset-block.other {
+    background: var(--sand);
+    border: 1px solid var(--border);
+  }
+
+  .adset-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .adset-winner-tag {
+    display: inline-block;
+    background: var(--leaf);
+    color: white;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-name {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .metric-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .metric-val.good { color: var(--leaf); }
+  .metric-val.warn { color: var(--terra); }
+
+  /* ── ANUNCIOS TABLE ── */
+  .ads-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 56px;
+  }
+
+  .ads-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 16px;
+    text-align: left;
+    background: var(--sand);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .ads-table th:first-child { border-radius: 8px 0 0 0; }
+  .ads-table th:last-child { border-radius: 0 8px 0 0; }
+
+  .ads-table td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .ads-table tr:last-child td { border-bottom: none; }
+
+  .ads-table tr:hover td { background: rgba(245,239,230,0.5); }
+
+  .ads-table tbody { background: white; border-radius: 0 0 12px 12px; }
+
+  .ad-name-cell {
+    font-weight: 500;
+    color: var(--night);
+  }
+
+  .ad-name-cell small {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .tag-best { background: rgba(61,107,79,0.1); color: var(--leaf); }
+  .tag-good { background: rgba(74,127,165,0.1); color: var(--sky); }
+  .tag-warn { background: rgba(196,98,45,0.1); color: var(--terra); }
+
+  .num { font-family: 'DM Mono', monospace; font-size: 13px; }
+  .num.green { color: var(--leaf); }
+  .num.amber { color: var(--gold); }
+  .num.red { color: var(--terra); }
+
+  /* ── WRAP TABLE ── */
+  .table-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 56px;
+  }
+
+  /* ── BAR CHART ── */
+  .bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bar-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 60px;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bar-track {
+    height: 28px;
+    background: var(--sand);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  .bar-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: right;
+    color: var(--text);
+  }
+
+  /* ── INSIGHTS ── */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .insight-card {
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+  }
+
+  .insight-card.positive {
+    background: linear-gradient(135deg, rgba(61,107,79,0.1), rgba(61,107,79,0.05));
+    border: 1px solid rgba(61,107,79,0.2);
+  }
+
+  .insight-card.warning {
+    background: linear-gradient(135deg, rgba(200,146,42,0.1), rgba(200,146,42,0.05));
+    border: 1px solid rgba(200,146,42,0.2);
+  }
+
+  .insight-card.neutral {
+    background: linear-gradient(135deg, rgba(74,127,165,0.1), rgba(74,127,165,0.05));
+    border: 1px solid rgba(74,127,165,0.2);
+  }
+
+  .insight-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .insight-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--night);
+  }
+
+  .insight-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── RECOMMENDATIONS ── */
+  .reco-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .reco-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .reco-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--terra);
+    line-height: 1;
+  }
+
+  .reco-content {}
+
+  .reco-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--night);
+    margin-bottom: 6px;
+  }
+
+  .reco-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--night);
+    padding: 36px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--sand);
+    letter-spacing: 1px;
+  }
+
+  .footer-brand em { font-style: italic; color: var(--terra-light); }
+
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: rgba(245,239,230,0.3);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── PROGRESS RING ── */
+  .ring-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0 16px;
+  }
+
+  .ring-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+
+  .ring-svg {
+    transform: rotate(-90deg);
+    width: 120px;
+    height: 120px;
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: var(--sand-dark);
+    stroke-width: 8;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 314;
+    animation: fillRing 1.5s ease forwards 0.3s;
+  }
+
+  @keyframes fillRing {
+    to { stroke-dashoffset: var(--target-offset); }
+  }
+
+  .ring-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ring-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--night);
+  }
+
+  .ring-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--night), var(--night-mid));
+    border-radius: 16px;
+    padding: 40px 48px;
+    margin-bottom: 56px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 100% at 50% 0%, rgba(196,98,45,0.2), transparent);
+  }
+
+  .hl-item {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 32px;
+  }
+
+  .hl-item + .hl-item {
+    border-left: 1px solid rgba(245,239,230,0.1);
+  }
+
+  .hl-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--sand);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .hl-val em { font-style: italic; color: var(--terra-light); }
+
+  .hl-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,239,230,0.45);
+  }
+
+  .hl-sub {
+    font-size: 12px;
+    color: rgba(245,239,230,0.3);
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  /* ── EFFICIENCY SECTION ── */
+  .efficiency-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .efficiency-grid { grid-template-columns: 1fr; }
+    .insights-grid { grid-template-columns: 1fr; }
+    .highlight-box { grid-template-columns: 1fr; gap: 32px; }
+    .hl-item + .hl-item { border-left: none; border-top: 1px solid rgba(245,239,230,0.1); padding-top: 32px; }
+    .header-inner { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .main { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-bg"></div>
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Reporte de Performance · Paid Social</div>
+      <h1 class="header-title">Surcando <em>Viajes</em></h1>
+      <p class="header-subtitle">Análisis integral de campañas — Meta Ads</p>
+    </div>
+    <div class="header-meta">
+      <div class="header-period">
+        2 mar. 2026<br>→ 31 mar. 2026<br>30 días
+      </div>
+      <div class="header-platform">
+        <div class="meta-dot"></div>
+        <span>Meta Ads</span>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider"></div>
+</header>
+
+<main class="main">
+
+  <!-- HIGHLIGHT HERO -->
+  <div class="highlight-box" style="animation-delay:0s">
+    <div class="hl-item">
+      <div class="hl-val"><em>165</em></div>
+      <div class="hl-label">Conversaciones iniciadas</div>
+      <div class="hl-sub">WhatsApp · objetivo principal</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-val">$<em>1.15</em></div>
+      <div class="hl-label">Costo por resultado</div>
+      <div class="hl-sub">USD por conversación</div>
+    </div>
+    <div class="hl-item">
+      <div class="hl-val">$<em>189</em></div>
+      <div class="hl-label">Inversión total</div>
+      <div class="hl-sub">USD invertidos en el período</div>
+    </div>
+  </div>
+
+  <!-- KPIs PRINCIPALES -->
+  <div class="section-title">Métricas generales de campaña</div>
+  <div class="kpi-grid">
+    <div class="kpi-card terra fade-in">
+      <div class="kpi-label">Alcance</div>
+      <div class="kpi-value">55<span style="font-size:28px">k</span></div>
+      <div class="kpi-sub">personas únicas impactadas</div>
+      <div class="kpi-badge badge-neutral">55,658</div>
+    </div>
+    <div class="kpi-card leaf fade-in">
+      <div class="kpi-label">Impresiones</div>
+      <div class="kpi-value">130<span style="font-size:28px">k</span></div>
+      <div class="kpi-sub">impresiones totales</div>
+      <div class="kpi-badge badge-neutral">130,166</div>
+    </div>
+    <div class="kpi-card sky fade-in">
+      <div class="kpi-label">CTR (enlace)</div>
+      <div class="kpi-value">0.65<span style="font-size:22px">%</span></div>
+      <div class="kpi-sub">tasa de clic en enlace</div>
+      <div class="kpi-badge badge-good">Competitivo</div>
+    </div>
+    <div class="kpi-card gold fade-in">
+      <div class="kpi-label">CPM</div>
+      <div class="kpi-value"><sup>$</sup>1.45</div>
+      <div class="kpi-sub">costo por 1,000 impresiones</div>
+      <div class="kpi-badge badge-good">Muy eficiente</div>
+    </div>
+  </div>
+
+  <!-- MÉTRICAS DE EFICIENCIA -->
+  <div class="section-title">Eficiencia y cobertura</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Frecuencia y cobertura</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
+        <div>
+          <div class="ring-wrap">
+            <div class="ring-container">
+              <svg class="ring-svg" viewBox="0 0 120 120">
+                <circle class="ring-bg" cx="60" cy="60" r="50"/>
+                <circle class="ring-fill" cx="60" cy="60" r="50"
+                  stroke="var(--terra)"
+                  style="--target-offset: calc(314 * (1 - 2.34/5))"/>
+              </svg>
+              <div class="ring-text">
+                <span class="ring-val">2.34</span>
+                <span class="ring-lbl">frecuencia</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:12px; color:var(--text-muted); text-align:center; line-height:1.5;">Cada persona vio el anuncio <strong style="color:var(--night)">2.3 veces</strong> en promedio — dentro del rango saludable</p>
+        </div>
+        <div>
+          <div class="metric-row">
+            <span class="metric-name">Alcance</span>
+            <span class="metric-val">55,658</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Impresiones</span>
+            <span class="metric-val">130,166</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Frecuencia</span>
+            <span class="metric-val good">2.34×</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">Inversión</span>
+            <span class="metric-val">$189.31 USD</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-name">CPM</span>
+            <span class="metric-val good">$1.45 USD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tasa de conversión del embudo</div>
+      <div style="padding: 8px 0;">
+        <!-- Alcance -->
+        <div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;color:var(--text-muted);">Alcance total</span>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;">55,658</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--sky),var(--sky));"></div>
+          </div>
+        </div>
+        <!-- Impresiones -->
+        <div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;color:var(--text-muted);">Impresiones</span>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;">130,166</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:85%;background:linear-gradient(90deg,var(--terra-light),var(--terra));"></div>
+          </div>
+        </div>
+        <!-- Clics -->
+        <div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;color:var(--text-muted);">Clics estimados (CTR 0.65%)</span>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;">~852</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:22%;background:linear-gradient(90deg,var(--gold-light),var(--gold));"></div>
+          </div>
+        </div>
+        <!-- Conversaciones -->
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:12px;color:var(--text-muted);">Conversaciones WhatsApp</span>
+            <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--leaf);">165</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:8%;background:linear-gradient(90deg,var(--leaf-light),var(--leaf));"></div>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:16px;font-family:'DM Mono',monospace;letter-spacing:0.5px;">Conversión clic→WhatsApp estimada: ~19.4%</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AD SETS -->
+  <div class="section-title">Comparativa conjuntos de anuncios</div>
+  <div class="card" style="margin-bottom:56px;">
+    <div class="card-title">AD SET 1 Advantage+ vs AD SET 2 Intereses</div>
+    <div class="adset-compare">
+      <div class="adset-block winner">
+        <div class="adset-winner-tag">✦ Mejor CPR</div>
+        <div class="adset-name">AD SET 1 / Advantage+</div>
+        <div class="metric-row">
+          <span class="metric-name">Resultados</span>
+          <span class="metric-val">85</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Costo por resultado</span>
+          <span class="metric-val good">$1.11 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Inversión</span>
+          <span class="metric-val">$94.71 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Alcance</span>
+          <span class="metric-val">26,714</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Impresiones</span>
+          <span class="metric-val">58,184</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">CPM</span>
+          <span class="metric-val warn">$1.63 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">CTR</span>
+          <span class="metric-val good">0.77%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Frecuencia</span>
+          <span class="metric-val">2.18×</span>
+        </div>
+      </div>
+      <div class="adset-block other">
+        <div class="adset-name">AD SET 2 / Intereses</div>
+        <div class="metric-row">
+          <span class="metric-name">Resultados</span>
+          <span class="metric-val">80</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Costo por resultado</span>
+          <span class="metric-val warn">$1.18 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Inversión</span>
+          <span class="metric-val">$94.60 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Alcance</span>
+          <span class="metric-val good">41,221</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Impresiones</span>
+          <span class="metric-val good">71,982</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">CPM</span>
+          <span class="metric-val good">$1.31 USD</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">CTR</span>
+          <span class="metric-val">0.56%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Frecuencia</span>
+          <span class="metric-val">1.75×</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px; padding:16px; background:var(--sand); border-radius:8px; border:1px solid var(--border);">
+      <p style="font-size:13px; color:var(--text-muted); line-height:1.7; font-weight:300;">
+        <strong style="color:var(--night);">Lectura:</strong> Advantage+ logra mejor costo por resultado ($1.11 vs $1.18) y mayor CTR (0.77% vs 0.56%), mientras que Intereses genera mayor alcance único y CPM más bajo. El presupuesto está distribuido equitativamente — ambos conjuntos recibieron prácticamente la misma inversión (~$94.6 vs ~$94.7 USD).
+      </p>
+    </div>
+  </div>
+
+  <!-- ANUNCIOS -->
+  <div class="section-title">Análisis por anuncio</div>
+  <div class="table-wrap" style="margin-bottom:56px;">
+    <table class="ads-table">
+      <thead>
+        <tr>
+          <th>Anuncio</th>
+          <th>Conversaciones</th>
+          <th>Inversión</th>
+          <th>CPR</th>
+          <th>CTR</th>
+          <th>CPM</th>
+          <th>Frecuencia</th>
+          <th>Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Iguazú
+            <small>AD SET 1 · Advantage+</small>
+          </td>
+          <td><span class="num">43</span></td>
+          <td><span class="num">$37.14</span></td>
+          <td><span class="num green">$0.86</span></td>
+          <td><span class="num green">0.81%</span></td>
+          <td><span class="num">$1.71</span></td>
+          <td><span class="num">1.62×</span></td>
+          <td><span class="tag tag-best">★ Mejor CPR</span></td>
+        </tr>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Iguazú
+            <small>AD SET 2 · Intereses</small>
+          </td>
+          <td><span class="num">59</span></td>
+          <td><span class="num">$62.02</span></td>
+          <td><span class="num green">$1.05</span></td>
+          <td><span class="num">0.58%</span></td>
+          <td><span class="num green">$1.26</span></td>
+          <td><span class="num">1.51×</span></td>
+          <td><span class="tag tag-good">Mayor volumen</span></td>
+        </tr>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Salta Mayo
+            <small>AD SET 2 · Intereses</small>
+          </td>
+          <td><span class="num">20</span></td>
+          <td><span class="num">$31.49</span></td>
+          <td><span class="num amber">$1.57</span></td>
+          <td><span class="num">0.50%</span></td>
+          <td><span class="num green">$1.42</span></td>
+          <td><span class="num">1.58×</span></td>
+          <td><span class="tag tag-warn">Costo elevado</span></td>
+        </tr>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Salta Julio
+            <small>AD SET 1 · Advantage+</small>
+          </td>
+          <td><span class="num">39</span></td>
+          <td><span class="num">$54.38</span></td>
+          <td><span class="num amber">$1.39</span></td>
+          <td><span class="num">0.73%</span></td>
+          <td><span class="num">$1.58</span></td>
+          <td><span class="num">2.21×</span></td>
+          <td><span class="tag tag-warn">Optimizable</span></td>
+        </tr>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Salta Mayo
+            <small>AD SET 1 · Advantage+</small>
+          </td>
+          <td><span class="num">3</span></td>
+          <td><span class="num">$3.19</span></td>
+          <td><span class="num green">$1.06</span></td>
+          <td><span class="num green">1.03%</span></td>
+          <td><span class="num">$1.49</span></td>
+          <td><span class="num">1.30×</span></td>
+          <td><span class="tag tag-good">Poco volumen</span></td>
+        </tr>
+        <tr>
+          <td class="ad-name-cell">
+            AD / Salta Julio
+            <small>AD SET 2 · Intereses</small>
+          </td>
+          <td><span class="num">1</span></td>
+          <td><span class="num">$1.09</span></td>
+          <td><span class="num">$1.09</span></td>
+          <td><span class="num">1.07%</span></td>
+          <td><span class="num">$1.94</span></td>
+          <td><span class="num">1.14×</span></td>
+          <td><span class="tag tag-neutral" style="background:rgba(92,61,46,0.08);color:var(--text-muted);">Sin estadística</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- DESTINOS: IGUAZÚ VS SALTA -->
+  <div class="section-title">Comparativa por destino</div>
+  <div class="two-col" style="margin-bottom:56px;">
+    <div class="card">
+      <div class="card-title">Cataratas del Iguazú</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">Conversaciones</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--leaf-light),var(--leaf));">102</div>
+          </div>
+          <span class="bar-val">102</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Inversión USD</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:53%;background:linear-gradient(90deg,var(--terra-light),var(--terra));">$99.16</div>
+          </div>
+          <span class="bar-val">$99.16</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">CPR promedio</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:58%;background:linear-gradient(90deg,var(--gold-light),var(--gold));">$0.97</div>
+          </div>
+          <span class="bar-val">$0.97</span>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px;background:rgba(61,107,79,0.06);border-radius:8px;border:1px solid rgba(61,107,79,0.15);">
+        <p style="font-size:12px;color:var(--leaf);font-weight:500;">Destino más eficiente · 61.8% de las conversaciones</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;font-weight:300;">Mejor costo por resultado promedio del portfolio</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Salta (Mayo + Julio)</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <span class="bar-label">Conversaciones</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:62%;background:linear-gradient(90deg,var(--sky),var(--sky));">63</div>
+          </div>
+          <span class="bar-val">63</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Inversión USD</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--terra-light),var(--terra));">$90.15</div>
+          </div>
+          <span class="bar-val">$90.15</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">CPR promedio</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:linear-gradient(90deg,var(--gold-light),var(--gold));">$1.43</div>
+          </div>
+          <span class="bar-val">$1.43</span>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding:14px;background:rgba(196,98,45,0.06);border-radius:8px;border:1px solid rgba(196,98,45,0.15);">
+        <p style="font-size:12px;color:var(--terra);font-weight:500;">Destino con mayor costo por conversación</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;font-weight:300;">Oportunidad de optimización en creatividades</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="section-title">Puntos clave del período</div>
+  <div class="insights-grid">
+    <div class="insight-card positive">
+      <span class="insight-icon">🟢</span>
+      <div class="insight-title">CPM excepcionalmente bajo</div>
+      <div class="insight-text">Con $1.45 USD de CPM promedio, la campaña accede al inventario de Argentina a un costo muy competitivo. Refleja buena calidad de anuncios y relevancia de la audiencia.</div>
+    </div>
+    <div class="insight-card positive">
+      <span class="insight-icon">🟢</span>
+      <div class="insight-title">Iguazú: el creativo ganador</div>
+      <div class="insight-text">El anuncio de Iguazú en Advantage+ logra el mejor CPR de toda la cuenta ($0.86 USD) con el segundo mayor volumen de conversaciones (43). Es el formato a escalar.</div>
+    </div>
+    <div class="insight-card warning">
+      <span class="insight-icon">🟡</span>
+      <div class="insight-title">Salta necesita optimización</div>
+      <div class="insight-text">Los anuncios de Salta muestran un CPR 47% más alto que Iguazú. El ad de Salta Mayo en Intereses ($1.57) es el menos eficiente. Revisar creatividades y mensajes.</div>
+    </div>
+    <div class="insight-card positive">
+      <span class="insight-icon">🟢</span>
+      <div class="insight-title">Advantage+ supera a Intereses</div>
+      <div class="insight-text">Con igual presupuesto, Advantage+ genera mejor CPR ($1.11 vs $1.18) y mayor CTR (0.77% vs 0.56%). Meta AI optimiza mejor que la segmentación manual para este cliente.</div>
+    </div>
+    <div class="insight-card neutral">
+      <span class="insight-icon">🔵</span>
+      <div class="insight-title">Frecuencia saludable</div>
+      <div class="insight-text">Una frecuencia de 2.34 está dentro del rango óptimo (2-4) para campañas de conversión en turismo. No hay señales de fatiga publicitaria en el período.</div>
+    </div>
+    <div class="insight-card warning">
+      <span class="insight-icon">🟡</span>
+      <div class="insight-title">CTR por destino diverge</div>
+      <div class="insight-text">El anuncio de Salta Mayo en Intereses tiene el CTR más bajo del portfolio (0.50%), mientras que Salta Mayo en Advantage+ lidera el CTR (1.03%). El set de segmentación impacta la relevancia.</div>
+    </div>
+  </div>
+
+  <!-- RECOMENDACIONES -->
+  <div class="section-title">Recomendaciones estratégicas</div>
+  <div class="reco-list">
+    <div class="reco-item">
+      <div class="reco-num">01</div>
+      <div class="reco-content">
+        <div class="reco-title">Escalar presupuesto en Iguazú · Advantage+</div>
+        <div class="reco-text">El anuncio de Iguazú en Advantage+ es el activo más eficiente de toda la cuenta con un CPR de $0.86 USD. Se recomienda aumentar la inversión en este conjunto entre un 30-50% del presupuesto incremental disponible, monitoreando que la frecuencia no supere 3.5 antes de ampliar audiencias.</div>
+      </div>
+    </div>
+    <div class="reco-item">
+      <div class="reco-num">02</div>
+      <div class="reco-content">
+        <div class="reco-title">Revisar y refrescar creatividades de Salta</div>
+        <div class="reco-text">Los anuncios de Salta Mayo (Intereses) y Salta Julio (Advantage+) tienen CPR de $1.57 y $1.39 respectivamente — un 47-63% más caros que el mejor anuncio. Se recomienda testear nuevas creatividades: diferentes imágenes, textos con énfasis en precio/cuotas, y variaciones de CTA orientadas a urgencia (fechas de viaje).</div>
+      </div>
+    </div>
+    <div class="reco-item">
+      <div class="reco-num">03</div>
+      <div class="reco-content">
+        <div class="reco-title">Priorizar Advantage+ sobre segmentación manual</div>
+        <div class="reco-text">Los datos muestran consistentemente que Advantage+ logra mejor eficiencia. Con presupuestos ajustados, se recomienda migrar el 60-70% del presupuesto total a Advantage+ y usar Intereses solo para testear nuevas audiencias o destinos, evaluando rendimiento por mínimo 7 días antes de escalar.</div>
+      </div>
+    </div>
+    <div class="reco-item">
+      <div class="reco-num">04</div>
+      <div class="reco-content">
+        <div class="reco-title">Incorporar seguimiento post-conversación</div>
+        <div class="reco-text">La campaña optimiza para conversaciones iniciadas, pero no hay datos de conversaciones respondidas (campo vacío en el CSV). Se recomienda activar el tracking de respuestas dentro de los 7 días para calcular la tasa de cierre real y el costo por lead calificado, que es la métrica que más importa al negocio.</div>
+      </div>
+    </div>
+    <div class="reco-item">
+      <div class="reco-num">05</div>
+      <div class="reco-content">
+        <div class="reco-title">Agregar nuevos destinos al portfolio</div>
+        <div class="reco-text">Con un CPM tan bajo ($1.45) y una frecuencia aún controlada, hay capacidad de audiencia disponible. Se recomienda incorporar nuevos destinos — Patagonia, Mendoza, o destinos internacionales — testeando con presupuestos pequeños ($15-20 USD por anuncio) para identificar qué producto tiene más demanda en la audiencia actual.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN EJECUTIVO -->
+  <div class="section-title">Resumen ejecutivo</div>
+  <div class="card" style="margin-bottom:0;">
+    <div style="display:grid; grid-template-columns:1fr 2fr; gap:48px; align-items:start;">
+      <div>
+        <div style="margin-bottom:32px;">
+          <div class="kpi-label" style="margin-bottom:8px;">Resultado general</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--leaf);">Buena performance</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-top:4px;font-weight:300;">para una campaña de nicho turístico</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--leaf);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text-muted);">CPM muy competitivo: $1.45</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--leaf);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text-muted);">165 leads a $1.15 promedio</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text-muted);">Salta con CPR optimizable</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--leaf);flex-shrink:0;"></div>
+            <span style="font-size:13px;color:var(--text-muted);">Advantage+ supera Intereses</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:15px;font-weight:300;color:var(--text);line-height:1.85;margin-bottom:16px;">
+          Durante marzo 2026, la campaña de Meta Ads de <strong>Surcando Viajes</strong> generó <strong>165 conversaciones iniciadas en WhatsApp</strong> con una inversión de <strong>$189.31 USD</strong>, alcanzando un costo por resultado promedio de <strong>$1.15 USD</strong>, lo que representa una performance sólida para el segmento de turismo en Argentina.
+        </p>
+        <p style="font-size:15px;font-weight:300;color:var(--text);line-height:1.85;margin-bottom:16px;">
+          El destino <strong>Cataratas del Iguazú</strong> demostró ser el producto estrella, concentrando el 61.8% de las conversiones con el costo por resultado más bajo del portfolio ($0.97 en promedio entre ambos conjuntos). El formato <strong>Advantage+</strong> superó consistentemente a la segmentación por intereses en eficiencia de conversión.
+        </p>
+        <p style="font-size:15px;font-weight:300;color:var(--text);line-height:1.85;">
+          La oportunidad más clara del próximo período es <strong>optimizar los creativos de Salta</strong> para reducir su CPR hacia el benchmark de $1.00-1.10, y <strong>escalar Iguazú en Advantage+</strong>, el activo de mayor retorno de toda la cuenta.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-brand">Surcando <em>Viajes</em></div>
+  <div class="footer-meta">
+    Informe de Performance · Meta Ads<br>
+    Período: 02 mar. — 31 mar. 2026<br>
+    Campaña: Interacción / WhatsApp / Argentina
+  </div>
+</footer>
+
+</body>
+</html>
